@@ -4,12 +4,20 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import numpy as np
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 # Initialize FastAPI app
 app = FastAPI()
 
 # Load trained model
 model = load('breast_cancer.pkl')
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=['*']
+)
 
 # Define list of features
 features_list = [
